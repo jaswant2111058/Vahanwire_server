@@ -8,6 +8,9 @@ const placeBid = async (req, res) => {
     const { rideId, driverId, bidAmount, message, estimatedArrival } = req.body;
 
     const ride = await Ride.findById(rideId).populate('userId', 'name avatar');
+
+    console.log("ride data:", ride);
+
     if (!ride) {
       return res.status(404).json({
         success: false,
@@ -45,6 +48,9 @@ const placeBid = async (req, res) => {
     }
 
     const existingBid = await Bid.findOne({ rideId, driverId });
+
+    console.log('Existing Bid:', existingBid);
+
     if (existingBid) {
       existingBid.bidAmount = bidAmount;
       existingBid.message = message;
@@ -94,6 +100,8 @@ const placeBid = async (req, res) => {
     await updateWinningBid(rideId);
     await bid.populate('driverId', 'name vehicleDetails rating');
 
+    console.log('New Bid:', rideId.toString());
+
     req.io.to(rideId.toString()).emit('new-bid', {
       bidId: bid._id,
       rideId: rideId,
@@ -109,6 +117,8 @@ const placeBid = async (req, res) => {
       userAvatar: ride.userId.avatar
     });
 
+    console.log('Bid placed and event emitted');
+
     res.status(201).json({
       success: true,
       message: 'Bid placed successfully',
@@ -120,6 +130,7 @@ const placeBid = async (req, res) => {
         isWinning: bid.isWinning
       }
     });
+
   } catch (error) {
     console.error('Place bid error:', error);
     res.status(500).json({
