@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
   console.log(`Timestamp: ${new Date().toISOString()}`);
   console.log('─'.repeat(50));
 
-  socket.on('join-room', (roomId) => {
+  socket.on('join-room', (roomData) => {
     console.log(`\n📥 SOCKET EVENT - JOIN ROOM:`);
     console.log(`Socket ID: ${socket.id}`);
     console.log(`Event: join-room`);
@@ -98,8 +98,8 @@ io.on('connection', (socket) => {
     console.log(`Timestamp: ${new Date().toISOString()}`);
     console.log('─'.repeat(50));
     
-    socket.join(roomId.roomId);
-    console.log(`✅ Socket ${socket.id} joined room ${roomId}`);
+    socket.join(roomData.roomId);
+    console.log(`✅ Socket ${socket.id} joined room ${roomData.roomId}`);
   });
 
   socket.on('place-bid', (bidData) => {

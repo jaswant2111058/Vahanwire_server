@@ -40,6 +40,9 @@ const placeBid = async (req, res) => {
     }
 
     const driver = await Driver.findById(driverId);
+
+    console.log("driver data:", driver);
+
     if (!driver || !driver.isActive || driver.status !== 'online') {
       return res.status(400).json({
         success: false,
