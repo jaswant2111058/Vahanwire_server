@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
     console.log(`\n📥 SOCKET EVENT - JOIN ROOM:`);
     console.log(`Socket ID: ${socket.id}`);
     console.log(`Event: join-room`);
-    console.log(`Data:`, roomId);
+    console.log(`Data:`, roomData);
     console.log(`Timestamp: ${new Date().toISOString()}`);
     console.log('─'.repeat(50));
     
